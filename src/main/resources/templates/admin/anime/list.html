@@ -25,9 +25,7 @@
         <td th:text="${anime.russian}"></td>
         <td th:text="${anime.episodes}"></td>
         <td th:text="${anime.status}"></td>
-        <td>
-            <a class="btn btn-primary btn-sm" th:href="@{'/admin/anime/edit/' + ${anime.id}}">Edit</a>
-        </td>
+
         <td>
             <a class="btn btn-primary btn-sm" th:href="@{'/admin/anime/edit/' + ${anime.id}}">Edit</a>
             <a class="btn btn-danger btn-sm" th:href="@{'/admin/anime/delete/' + ${anime.id}}"

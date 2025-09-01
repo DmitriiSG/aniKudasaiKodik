@@ -1,12 +1,10 @@
 package org.example.anikudasaikodik.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
-@Table(name = "images")
-public class Image {
-
+@Table(name = "screenshots")
+public class Screenshots {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,15 +12,11 @@ public class Image {
     private String original;
     private String preview;
 
-    @Column(name = "x96")
-    private String x96;
+    @ManyToOne
+    @JoinColumn(name = "anime_id")
+    private Anime anime;
 
-    @Column(name = "x48")
-    private String x48;
-
-
-    public Image() {
-    }
+    public Screenshots() {}
 
     public Long getId() {
         return id;
@@ -48,20 +42,11 @@ public class Image {
         this.preview = preview;
     }
 
-    public String getX96() {
-        return x96;
+    public Anime getAnime() {
+        return anime;
     }
 
-    public void setX96(String x96) {
-        this.x96 = x96;
+    public void setAnime(Anime anime) {
+        this.anime = anime;
     }
-
-    public String getX48() {
-        return x48;
-    }
-
-    public void setX48(String x48) {
-        this.x48 = x48;
-    }
-
 }

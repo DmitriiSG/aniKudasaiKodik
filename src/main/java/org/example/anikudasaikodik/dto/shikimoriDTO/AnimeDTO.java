@@ -1,20 +1,52 @@
 package org.example.anikudasaikodik.dto.shikimoriDTO;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class AnimeDTO {
-    private Long id;
-    private String name;
-    private String russian;
-    private String kind;
-    private Integer episodes;
-    private String status;
-    private Double score;
-    private ImageDTO image;
-    public AnimeDTO() {}
+        private Long id;
+
+        private String name;
+        private String russian;
+        private String url;
+        private String kind;
+        private Double score;
+        private String status;
+        private Integer episodes;
+        private Integer episodesAired;
+        private String aired_on;
+        private String released_on;
+        private String rating;
+        private String licenseNameRu;
+        private Integer duration;
+        private String description;
+        private String descriptionHtml;
+        private String descriptionSource;
+        private String franchise;
+        private Boolean favoured;
+        private Boolean anons;
+        private Boolean ongoing;
+        private Long threadId;
+        private Long topicId;
+        private Long myanimelistId;
+        private OffsetDateTime updatedAt;
+        private OffsetDateTime nextEpisodeAt;
+        @JsonProperty("image")
+        private ImageDTO  imageDTO ;
+        @JsonProperty("screenshots")
+        private List<ScreenshotsDTO> screenshotsDTO ;
+        @JsonProperty("genres")
+        private List<GenreDTO> genresDTO ;
+        @JsonProperty("studios")
+        private List<StudiosDTO> studiosDTO ;
+        private Set<AnimeCharacterDTO> charactersDTO = new HashSet<>();
+
+        public AnimeDTO() {}
 
     public Long getId() {
         return id;
@@ -40,28 +72,20 @@ public class AnimeDTO {
         this.russian = russian;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getKind() {
         return kind;
     }
 
     public void setKind(String kind) {
         this.kind = kind;
-    }
-
-    public Integer getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(Integer episodes) {
-        this.episodes = episodes;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Double getScore() {
@@ -72,11 +96,203 @@ public class AnimeDTO {
         this.score = score;
     }
 
-    public ImageDTO getImage() {
-        return image;
+    public String getStatus() {
+        return status;
     }
 
-    public void setImage(ImageDTO image) {
-        this.image = image;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(Integer episodes) {
+        this.episodes = episodes;
+    }
+
+    public Integer getEpisodesAired() {
+        return episodesAired;
+    }
+
+    public void setEpisodesAired(Integer episodesAired) {
+        this.episodesAired = episodesAired;
+    }
+
+    public String getAiredOn() {
+        return aired_on;
+    }
+
+    public void setAired_on(String aired_on) {
+        this.aired_on = aired_on;
+    }
+
+    public String getReleasedOn() {
+        return released_on;
+    }
+
+    public void setReleased_on(String released_on) {
+        this.released_on = released_on;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getLicenseNameRu() {
+        return licenseNameRu;
+    }
+
+    public void setLicenseNameRu(String licenseNameRu) {
+        this.licenseNameRu = licenseNameRu;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescriptionHtml() {
+        return descriptionHtml;
+    }
+
+    public void setDescriptionHtml(String descriptionHtml) {
+        this.descriptionHtml = descriptionHtml;
+    }
+
+    public String getDescriptionSource() {
+        return descriptionSource;
+    }
+
+    public void setDescriptionSource(String descriptionSource) {
+        this.descriptionSource = descriptionSource;
+    }
+
+    public String getFranchise() {
+        return franchise;
+    }
+
+    public void setFranchise(String franchise) {
+        this.franchise = franchise;
+    }
+
+    public Boolean getFavoured() {
+        return favoured;
+    }
+
+    public void setFavoured(Boolean favoured) {
+        this.favoured = favoured;
+    }
+
+    public Boolean getAnons() {
+        return anons;
+    }
+
+    public void setAnons(Boolean anons) {
+        this.anons = anons;
+    }
+
+    public Boolean getOngoing() {
+        return ongoing;
+    }
+
+    public void setOngoing(Boolean ongoing) {
+        this.ongoing = ongoing;
+    }
+
+    public Long getThreadId() {
+        return threadId;
+    }
+
+    public void setThreadId(Long threadId) {
+        this.threadId = threadId;
+    }
+
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
+
+    public Long getMyanimelistId() {
+        return myanimelistId;
+    }
+
+    public void setMyanimelistId(Long myanimelistId) {
+        this.myanimelistId = myanimelistId;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public OffsetDateTime getNextEpisodeAt() {
+        return nextEpisodeAt;
+    }
+
+    public void setNextEpisodeAt(OffsetDateTime nextEpisodeAt) {
+        this.nextEpisodeAt = nextEpisodeAt;
+    }
+
+    public ImageDTO getImageDTO() {
+        return imageDTO;
+    }
+
+    public void setImageDTO(ImageDTO imageDTO) {
+        this.imageDTO = imageDTO;
+    }
+
+    public List<ScreenshotsDTO> getScreenshotsDTO() {
+        return screenshotsDTO;
+    }
+
+    public void setScreenshotsDTO(List<ScreenshotsDTO> screenshotsDTO) {
+        this.screenshotsDTO = screenshotsDTO;
+    }
+
+    public List<GenreDTO> getGenresDTO() {
+        return genresDTO;
+    }
+
+    public void setGenresDTO(List<GenreDTO> genresDTO) {
+        this.genresDTO = genresDTO;
+    }
+
+    public List<StudiosDTO> getStudiosDTO() {
+        return studiosDTO;
+    }
+
+    public void setStudiosDTO(List<StudiosDTO> studiosDTO) {
+        this.studiosDTO = studiosDTO;
+    }
+
+    public Set<AnimeCharacterDTO> getCharactersDTO() {
+        return charactersDTO;
+    }
+
+    public void setCharactersDTO(Set<AnimeCharacterDTO> charactersDTO) {
+        this.charactersDTO = charactersDTO;
     }
 }

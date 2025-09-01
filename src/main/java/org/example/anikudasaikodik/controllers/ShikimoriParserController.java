@@ -20,7 +20,7 @@ public class ShikimoriParserController {
     }
 
     @PostMapping("/run")
-        public String runParser(@RequestParam String source, @RequestParam(defaultValue = "1") int pages) {
+        public String runParser(@RequestParam String source, @RequestParam(defaultValue = "1") int pages) throws InterruptedException {
             switch (source.toLowerCase()) {
                 case "shikimori" -> shikimoriParser.parseAndSave(pages);
                 //case "kodik" -> kodikParser.parseAndSave(pages);
