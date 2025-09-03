@@ -3,14 +3,14 @@ package org.example.anikudasaikodik.dto.shikimoriDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.example.anikudasaikodik.models.Anime;
 
-public class ScreenshotsDTO {
+public class ShikimoriScreenshotsDTO {
         @JsonProperty("id")
         private Long id;
         private String original;
         private String preview;
         private Anime anime;
 
-        public ScreenshotsDTO() {}
+        public ShikimoriScreenshotsDTO() {}
 
         public Long getId() {
             return id;

@@ -1,7 +1,10 @@
 package org.example.anikudasaikodik.controllers;
 
+import org.example.anikudasaikodik.dto.frontendDTO.FrontendAnimeDTO;
 import org.example.anikudasaikodik.models.Anime;
 import org.example.anikudasaikodik.services.AnimeService;
+import org.example.anikudasaikodik.services.FrontendService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,21 +12,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/anime")
 public class FrontendController {
-    private final AnimeService animeService;
+    private final FrontendService frontendService;
 
-    public FrontendController(AnimeService animeService) {
-        this.animeService = animeService;
+    public FrontendController(FrontendService frontendService) {
+        this.frontendService = frontendService;
+
     }
 
     @GetMapping
-    public List<Anime> getAnime(
+    public Page<FrontendAnimeDTO> getAnime(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "50") int limit) {
-        return animeService.findAll(page, limit);
+
+        return frontendService.findAll(page, limit);
     }
     @GetMapping("/{id}")
-    public Anime getAnimeById(@PathVariable Long id) {
-        return animeService.findById(id)
+    public FrontendAnimeDTO getAnimeById(@PathVariable Long id) {
+        return frontendService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Anime not found"));
     }
 

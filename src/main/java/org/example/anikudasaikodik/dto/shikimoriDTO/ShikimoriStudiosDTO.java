@@ -2,7 +2,7 @@ package org.example.anikudasaikodik.dto.shikimoriDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StudiosDTO {
+public class ShikimoriStudiosDTO {
 
         private Long id;
         private String name;
@@ -11,7 +11,7 @@ public class StudiosDTO {
         @JsonProperty("image")
         private String imageDTO;
 
-        public StudiosDTO() {}
+        public ShikimoriStudiosDTO() {}
 
         public Long getId() {
             return id;

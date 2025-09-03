@@ -1,17 +1,9 @@
-package org.example.anikudasaikodik.models;
+package org.example.anikudasaikodik.dto.frontendDTO;
 
-import jakarta.persistence.*;
-
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "anime")
-@Entity
-public class Anime {
-
-    @Id
+public class FrontendAnimeDTO {
     private Long id;
 
     private String name;
@@ -21,69 +13,29 @@ public class Anime {
     private Double score;
     private String status;
     private Integer episodes;
-
-    @Column(name = "episodes_aired")
     private Integer episodesAired;
-
-    @Column(name = "aired_on")
-    private LocalDate airedOn;
-
-    @Column(name = "released_on")
-    private LocalDate releasedOn;
-
+    private String aired_on;
+    private String released_on;
     private String rating;
-
     private String licenseNameRu;
     private Integer duration;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
-
-    @Column(name = "description_html", columnDefinition = "TEXT")
     private String descriptionHtml;
-
     private String descriptionSource;
     private String franchise;
-
     private Boolean favoured;
     private Boolean anons;
     private Boolean ongoing;
-
     private Long threadId;
     private Long topicId;
-    private Long myanimelistId;
-
     private OffsetDateTime updatedAt;
     private OffsetDateTime nextEpisodeAt;
+    private FrontendImageDTO imageDTO ;
+    private List<FrontendScreenshotsDTO> screenshotsDTO ;
 
-    // 🔗 связи
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image image;
+    private List<FrontendGenreDTO> genresDTO ;
 
-    @OneToMany(mappedBy = "anime", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Screenshots> screenshots = new ArrayList<>();
-
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(
-            name = "anime_genre",
-            joinColumns = @JoinColumn(name = "anime_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    private List<Genre> genres = new ArrayList<>();
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "anime_studios",
-            joinColumns = @JoinColumn(name = "anime_id"),
-            inverseJoinColumns = @JoinColumn(name = "studio_id")
-    )
-    private List<Studios> studios = new ArrayList<>();
-
-
-
-    public Anime() {
-    }
+    private List<FrontendStudioDTO> frontendStudiosDTO;
 
     public Long getId() {
         return id;
@@ -157,20 +109,20 @@ public class Anime {
         this.episodesAired = episodesAired;
     }
 
-    public LocalDate getAiredOn() {
-        return airedOn;
+    public String getAired_on() {
+        return aired_on;
     }
 
-    public void setAiredOn(LocalDate airedOn) {
-        this.airedOn = airedOn;
+    public void setAired_on(String aired_on) {
+        this.aired_on = aired_on;
     }
 
-    public LocalDate getReleasedOn() {
-        return releasedOn;
+    public String getReleased_on() {
+        return released_on;
     }
 
-    public void setReleasedOn(LocalDate releasedOn) {
-        this.releasedOn = releasedOn;
+    public void setReleased_on(String released_on) {
+        this.released_on = released_on;
     }
 
     public String getRating() {
@@ -269,14 +221,6 @@ public class Anime {
         this.topicId = topicId;
     }
 
-    public Long getMyanimelistId() {
-        return myanimelistId;
-    }
-
-    public void setMyanimelistId(Long myanimelistId) {
-        this.myanimelistId = myanimelistId;
-    }
-
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
@@ -293,37 +237,35 @@ public class Anime {
         this.nextEpisodeAt = nextEpisodeAt;
     }
 
-    public Image getImage() {
-        return image;
+    public FrontendImageDTO getImageDTO() {
+        return imageDTO;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageDTO(FrontendImageDTO imageDTO) {
+        this.imageDTO = imageDTO;
     }
 
-    public List<Screenshots> getScreenshots() {
-        return screenshots;
+    public List<FrontendScreenshotsDTO> getScreenshotsDTO() {
+        return screenshotsDTO;
     }
 
-    public void setScreenshots(List<Screenshots> screenshots) {
-        this.screenshots = screenshots;
+    public void setScreenshotsDTO(List<FrontendScreenshotsDTO> screenshotsDTO) {
+        this.screenshotsDTO = screenshotsDTO;
     }
 
-    public List<Genre> getGenres() {
-        return genres;
+    public List<FrontendGenreDTO> getGenresDTO() {
+        return genresDTO;
     }
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void setGenresDTO(List<FrontendGenreDTO> genresDTO) {
+        this.genresDTO = genresDTO;
     }
 
-    public List<Studios> getStudios() {
-        return studios;
+    public List<FrontendStudioDTO> getFrontendStudiosDTO() {
+        return frontendStudiosDTO;
     }
 
-    public void setStudios(List<Studios> studios) {
-        this.studios = studios;
+    public void setFrontendStudiosDTO(List<FrontendStudioDTO> frontendStudiosDTO) {
+        this.frontendStudiosDTO = frontendStudiosDTO;
     }
-
-
 }

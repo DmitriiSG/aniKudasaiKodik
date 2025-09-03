@@ -1,9 +1,7 @@
 package org.example.anikudasaikodik.dto.shikimoriDTO;
 
-import lombok.Data;
 
-
-public class ImageDTO {
+public class ShikimoriImageDTO {
     private String original;
     private String preview;
     private String x96;

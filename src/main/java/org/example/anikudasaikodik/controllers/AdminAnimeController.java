@@ -1,8 +1,5 @@
 package org.example.anikudasaikodik.controllers;
 
-
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.example.anikudasaikodik.models.Anime;
 import org.example.anikudasaikodik.repositories.AnimeRepository;
 import org.springframework.stereotype.Controller;

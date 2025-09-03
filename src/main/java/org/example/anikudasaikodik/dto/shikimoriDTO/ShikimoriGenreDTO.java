@@ -1,46 +1,26 @@
-package org.example.anikudasaikodik.models;
+package org.example.anikudasaikodik.dto.shikimoriDTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.*;
-
-import java.util.List;
-
-@Entity
-@Table(name = "genres")
-public class Genre {
-    @Id
+public class ShikimoriGenreDTO {
     private Long id;
 
     private String name;
-    @ManyToMany(mappedBy = "genres")
-     private List<Anime> anime;
 
     private String russian;
 
     private String kind;
-
-
+    @JsonProperty("entry_type")
     private String entryType;
-
 
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long shikimoriId) {
-        this.id = shikimoriId;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public List<Anime> getAnime() {
-        return anime;
-    }
-
-    public void setAnime(List<Anime> anime) {
-        this.anime = anime;
-    }
-
-
 
     public String getName() {
         return name;

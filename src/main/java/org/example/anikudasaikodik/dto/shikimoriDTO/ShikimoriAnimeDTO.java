@@ -3,12 +3,10 @@ package org.example.anikudasaikodik.dto.shikimoriDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
-public class AnimeDTO {
+public class ShikimoriAnimeDTO {
         private Long id;
 
         private String name;
@@ -37,16 +35,16 @@ public class AnimeDTO {
         private OffsetDateTime updatedAt;
         private OffsetDateTime nextEpisodeAt;
         @JsonProperty("image")
-        private ImageDTO  imageDTO ;
+        private ShikimoriImageDTO imageDTO ;
         @JsonProperty("screenshots")
-        private List<ScreenshotsDTO> screenshotsDTO ;
+        private List<ShikimoriScreenshotsDTO> screenshotsDTO ;
         @JsonProperty("genres")
-        private List<GenreDTO> genresDTO ;
+        private List<ShikimoriGenreDTO> genresDTO ;
         @JsonProperty("studios")
-        private List<StudiosDTO> studiosDTO ;
-        private Set<AnimeCharacterDTO> charactersDTO = new HashSet<>();
+        private List<ShikimoriStudiosDTO> shikimoriStudiosDTO;
 
-        public AnimeDTO() {}
+
+        public ShikimoriAnimeDTO() {}
 
     public Long getId() {
         return id;
@@ -256,43 +254,37 @@ public class AnimeDTO {
         this.nextEpisodeAt = nextEpisodeAt;
     }
 
-    public ImageDTO getImageDTO() {
+    public ShikimoriImageDTO getImageDTO() {
         return imageDTO;
     }
 
-    public void setImageDTO(ImageDTO imageDTO) {
+    public void setImageDTO(ShikimoriImageDTO imageDTO) {
         this.imageDTO = imageDTO;
     }
 
-    public List<ScreenshotsDTO> getScreenshotsDTO() {
+    public List<ShikimoriScreenshotsDTO> getScreenshotsDTO() {
         return screenshotsDTO;
     }
 
-    public void setScreenshotsDTO(List<ScreenshotsDTO> screenshotsDTO) {
+    public void setScreenshotsDTO(List<ShikimoriScreenshotsDTO> screenshotsDTO) {
         this.screenshotsDTO = screenshotsDTO;
     }
 
-    public List<GenreDTO> getGenresDTO() {
+    public List<ShikimoriGenreDTO> getGenresDTO() {
         return genresDTO;
     }
 
-    public void setGenresDTO(List<GenreDTO> genresDTO) {
+    public void setGenresDTO(List<ShikimoriGenreDTO> genresDTO) {
         this.genresDTO = genresDTO;
     }
 
-    public List<StudiosDTO> getStudiosDTO() {
-        return studiosDTO;
+    public List<ShikimoriStudiosDTO> getStudiosDTO() {
+        return shikimoriStudiosDTO;
     }
 
-    public void setStudiosDTO(List<StudiosDTO> studiosDTO) {
-        this.studiosDTO = studiosDTO;
+    public void setStudiosDTO(List<ShikimoriStudiosDTO> shikimoriStudiosDTO) {
+        this.shikimoriStudiosDTO = shikimoriStudiosDTO;
     }
 
-    public Set<AnimeCharacterDTO> getCharactersDTO() {
-        return charactersDTO;
-    }
 
-    public void setCharactersDTO(Set<AnimeCharacterDTO> charactersDTO) {
-        this.charactersDTO = charactersDTO;
-    }
 }

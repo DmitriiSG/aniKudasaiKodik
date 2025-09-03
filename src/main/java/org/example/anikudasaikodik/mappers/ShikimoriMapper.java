@@ -2,27 +2,33 @@ package org.example.anikudasaikodik.mappers;
 
 import org.example.anikudasaikodik.dto.shikimoriDTO.*;
 import org.example.anikudasaikodik.models.*;
-import org.example.anikudasaikodik.models.AnimeCharacter;
+import org.example.anikudasaikodik.services.GenreService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ShikimoriMapper {
 
+    private GenreService genreService;
+
+    public ShikimoriMapper(GenreService genreService) {
+        this.genreService = genreService;
+    }
 
 
     // Маппинг только скелета (id, name, russian)
-    public Anime mapSkeleton(AnimeDTO dto) {
+    public Anime mapSkeleton(ShikimoriAnimeDTO dto) {
         Anime anime = new Anime();
         anime.setId(dto.getId());
         anime.setName(dto.getName());
         anime.setRussian(dto.getRussian());
         return anime;
     }
-    public void updateAnimeFromDTO(Anime anime, AnimeDTO dto) {
+    public void updateAnimeFromDTO(Anime anime, ShikimoriAnimeDTO dto) {
         anime.setKind(dto.getKind());
         anime.setEpisodes(dto.getEpisodes());
         anime.setStatus(dto.getStatus());
@@ -63,7 +69,7 @@ public class ShikimoriMapper {
         // Screenshots
         if (dto.getScreenshotsDTO() != null) {
             anime.getScreenshots().clear();
-            for (ScreenshotsDTO sDto : dto.getScreenshotsDTO()) {
+            for (ShikimoriScreenshotsDTO sDto : dto.getScreenshotsDTO()) {
                 Screenshots s = mapScreenshotDTOToEntity(sDto);
                 s.setAnime(anime);
                 anime.getScreenshots().add(s);
@@ -72,17 +78,18 @@ public class ShikimoriMapper {
 
         // Genres
         if (dto.getGenresDTO() != null) {
-            anime.getGenres().clear();
-            for (GenreDTO gDto : dto.getGenresDTO()) {
-                Genre g = mapGenreDTOToEntity(gDto);
-                anime.getGenres().add(g);
-            }
+            List<Genre> genres = dto.getGenresDTO().stream()
+                    .map(this::mapGenreDTOToEntity)
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+            anime.setGenres(genres);
         }
+
 
         // Studios
         if (dto.getStudiosDTO() != null) {
             anime.getStudios().clear();
-            for (StudiosDTO stDto : dto.getStudiosDTO()) {
+            for (ShikimoriStudiosDTO stDto : dto.getStudiosDTO()) {
                 Studios st = mapStudioDTOToEntity(stDto);
                 anime.getStudios().add(st);
             }
@@ -90,10 +97,11 @@ public class ShikimoriMapper {
 
         // Characters
 
+
     }
 
     // Полный маппинг (детали)
-    public Anime mapAnimeDTOToEntity(AnimeDTO dto) {
+    public Anime mapAnimeDTOToEntity(ShikimoriAnimeDTO dto) {
         Anime anime = mapSkeleton(dto);
         anime.setKind(dto.getKind());
         anime.setEpisodes(dto.getEpisodes());
@@ -127,7 +135,7 @@ public class ShikimoriMapper {
         // Screenshots
         if (dto.getScreenshotsDTO() != null) {
             List<Screenshots> screenshots = new ArrayList<>();
-            for (ScreenshotsDTO sDto : dto.getScreenshotsDTO()) {
+            for (ShikimoriScreenshotsDTO sDto : dto.getScreenshotsDTO()) {
                 Screenshots s = mapScreenshotDTOToEntity(sDto);
                 s.setAnime(anime); // важная обратная связь
                 screenshots.add(s);
@@ -138,7 +146,7 @@ public class ShikimoriMapper {
         // Genres
         if (dto.getGenresDTO() != null) {
             List<Genre> genres = new ArrayList<>();
-            for (GenreDTO gDto : dto.getGenresDTO()) {
+            for (ShikimoriGenreDTO gDto : dto.getGenresDTO()) {
                 Genre g = mapGenreDTOToEntity(gDto);
                 genres.add(g);
             }
@@ -148,7 +156,7 @@ public class ShikimoriMapper {
         // Studios
         if (dto.getStudiosDTO() != null) {
             List<Studios> studios = new ArrayList<>();
-            for (StudiosDTO stDto : dto.getStudiosDTO()) {
+            for (ShikimoriStudiosDTO stDto : dto.getStudiosDTO()) {
                 Studios st = mapStudioDTOToEntity(stDto);
                 studios.add(st);
             }
@@ -162,7 +170,7 @@ public class ShikimoriMapper {
     }
 
 
-    public Image mapImageDTOToEntity(ImageDTO dto) {
+    public Image mapImageDTOToEntity(ShikimoriImageDTO dto) {
         Image image = new Image();
         image.setOriginal(dto.getOriginal());
         image.setPreview(dto.getPreview());
@@ -171,14 +179,21 @@ public class ShikimoriMapper {
         return image;
     }
 
-    public Genre mapGenreDTOToEntity(GenreDTO dto) {
-        Genre genre = new Genre();
-        genre.setName(dto.getName());
-        genre.setId(dto.getId());
-        return genre;
+    public Genre mapGenreDTOToEntity(ShikimoriGenreDTO dto) {
+        return genreService.findById(dto.getId())
+                .orElseGet(() -> {
+                    Genre newGenre = new Genre();
+                    newGenre.setId(dto.getId());
+                    newGenre.setName(dto.getName());
+                    newGenre.setRussian(dto.getRussian());
+                    newGenre.setKind(dto.getKind());
+                    newGenre.setEntryType(dto.getEntryType());
+                    return genreService.save(newGenre); // сохраняем новый жанр
+                });
     }
 
-    public Screenshots mapScreenshotDTOToEntity(ScreenshotsDTO dto) {
+
+    public Screenshots mapScreenshotDTOToEntity(ShikimoriScreenshotsDTO dto) {
         Screenshots screenshots = new Screenshots();
         screenshots.setOriginal(dto.getOriginal());
         screenshots.setPreview(dto.getPreview());
@@ -188,7 +203,7 @@ public class ShikimoriMapper {
         return screenshots;
     }
 
-    public Studios mapStudioDTOToEntity(StudiosDTO dto) {
+    public Studios mapStudioDTOToEntity(ShikimoriStudiosDTO dto) {
         Studios studios = new Studios();
         studios.setId(dto.getId());
         studios.setName(dto.getName());
