@@ -4,6 +4,7 @@ import org.example.anikudasaikodik.models.Genre;
 import org.example.anikudasaikodik.repositories.GenreRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,5 +19,8 @@ public class GenreService {
     }
     public Genre save(Genre genre) {
         return genreRepository.save(genre);
+    }
+    public List<Genre> findAll() {
+        return genreRepository.findAll();
     }
 }
