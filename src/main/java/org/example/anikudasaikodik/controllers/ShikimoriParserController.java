@@ -3,6 +3,7 @@ package org.example.anikudasaikodik.controllers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
 import org.example.anikudasaikodik.services.ShikimoriParserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -21,6 +21,8 @@ public class FrontendMapper {
         if (anime != null) {
             frontendAnimeDTO.setId(anime.getId());
             frontendAnimeDTO.setName(anime.getName());
+            frontendAnimeDTO.setRussian(anime.getRussian());
+            frontendAnimeDTO.setReleased_on(anime.getReleasedOn() != null ? anime.getReleasedOn().toString() : null);
             frontendAnimeDTO.setDescription(anime.getDescription());
             frontendAnimeDTO.setScore(anime.getScore());
             frontendAnimeDTO.setStatus(anime.getStatus());

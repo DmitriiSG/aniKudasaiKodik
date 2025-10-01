@@ -71,18 +71,25 @@ public class FrontendService {
              { String normalizedQuery = "%" + query.toLowerCase().replace("ё", "е") + "%";
                  Expression<String> nameReplaced = cb.function("replace", String.class, cb.lower(root.get("name")), cb.literal("ё"), cb.literal("е"));
                  Expression<String> rusReplaced = cb.function("replace", String.class, cb.lower(root.get("russian")), cb.literal("ё"), cb.literal("е"));
-                 predicates.add(cb.or( cb.like(nameReplaced, normalizedQuery), cb.like(rusReplaced, normalizedQuery) )); }
+                 predicates.add(cb.or( cb.like(nameReplaced, normalizedQuery), cb.like(rusReplaced, normalizedQuery) ));
+             }
 
-            if (yearFrom != null || yearTo != null) { LocalDate start = (yearFrom != null) ? LocalDate.of(yearFrom, 1, 1) : LocalDate.of(1900, 1, 1); LocalDate end = (yearTo != null) ? LocalDate.of(yearTo, 12, 31) : LocalDate.of(2100, 12, 31);
-                predicates.add(cb.or( cb.between(root.get("releasedOn"), start, end), cb.isNull(root.get("releasedOn")) ));
+            if (yearFrom != null || yearTo != null) { LocalDate start = (yearFrom != null) ? LocalDate.of(yearFrom, 1, 1) : LocalDate.of(1900, 1, 1);
+                LocalDate end = (yearTo != null) ? LocalDate.of(yearTo, 12, 31) : LocalDate.of(2100, 12, 31);
+                predicates.add(cb.or( cb.between(root.get("releasedOn"), start, end), cb.isNull(root.get("releasedOn"))));
 
             }
             if (genres != null && !genres.isEmpty()) {
                 List<String> normalizedGenres = genres.stream() .map(g -> g.toLowerCase().replace("ё", "е")).toList();
-                Subquery<Long> subquery = cq.subquery(Long.class); Root<Anime> subRoot = subquery.from(Anime.class);
-                Join<Anime, Genre> subJoin = subRoot.join("genres", JoinType.INNER); Expression<String> genreNameNormalized = cb.function("replace", String.class, cb.lower(subJoin.get("name")), cb.literal("ё"), cb.literal("е"));
-                subquery.select(subRoot.get("id")) .where(genreNameNormalized.in(normalizedGenres)) .groupBy(subRoot.get("id")).having(cb.equal(cb.countDistinct(subJoin.get("id")), normalizedGenres.size())); predicates.add(root.get("id").in(subquery)); }
-            return cb.and(predicates.toArray(new Predicate[0])); }, pageable).map(frontendMapper::animeToFrontendDTO); }
+                Subquery<Long> subquery = cq.subquery(Long.class);
+                Root<Anime> subRoot = subquery.from(Anime.class);
+                Join<Anime, Genre> subJoin = subRoot.join("genres", JoinType.INNER);
+                Expression<String> genreNameNormalized = cb.function("replace", String.class, cb.lower(subJoin.get("name")), cb.literal("ё"), cb.literal("е"));
+                subquery.select(subRoot.get("id")).where(genreNameNormalized.in(normalizedGenres)).groupBy(subRoot.get("id")).having(cb.equal(cb.countDistinct(subJoin.get("id")), normalizedGenres.size()));
+                predicates.add(root.get("id").in(subquery));
+            }
+            return cb.and(predicates.toArray(new Predicate[0])); }, pageable).map(frontendMapper::animeToFrontendDTO);
+    }
 
 
     public Page<FrontendAnimeDTO> getRandomAnime() {
