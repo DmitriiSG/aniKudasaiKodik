@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Админка аниме</title>
+</head>
+<body>
+<h1>Админка аниме</h1>
+
+<form th:action="@{/admin/parser/start}" method="post">
+  <button type="submit">Запустить парсер</button>
+</form>
+
+<form th:action="@{/admin/parser/stop}" method="post">
+  <button type="submit">Остановить парсер</button>
+</form>
+
+<form th:action="@{/admin/parser/set-delay}" method="post">
+  <input type="number" name="delayMillis" placeholder="Интервал в мс"/>
+  <button type="submit">Установить интервал</button>
+</form>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Тип</th>
+    <th>Последняя серия</th>
+    <th>Действия</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="anime : ${animeList}">
+    <td th:text="${anime.id}"></td>
+    <td th:text="${anime.title}"></td>
+    <td th:text="${anime.type}"></td>
+    <td th:text="${anime.lastEpisode}"></td>
+    <td>
+      <a th:href="@{/admin/edit/{id}(id=${anime.id})}">Редактировать</a>
+      <form th:action="@{/admin/delete/{id}(id=${anime.id})}" method="post" style="display:inline">
+        <button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

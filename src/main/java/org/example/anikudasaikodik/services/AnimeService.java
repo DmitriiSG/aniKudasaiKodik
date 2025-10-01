@@ -1,31 +1,22 @@
 package org.example.anikudasaikodik.services;
 
 
-import lombok.RequiredArgsConstructor;
-import org.example.anikudasaikodik.dto.frontendDTO.FrontendAnimeDTO;
-import org.example.anikudasaikodik.mappers.FrontendMapper;
 import org.example.anikudasaikodik.models.Anime;
 import org.example.anikudasaikodik.repositories.AnimeRepository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AnimeService {
     private final AnimeRepository animeRepository;
-    private final FrontendMapper frontendMapper;
 
-    public AnimeService(AnimeRepository animeRepository, FrontendMapper frontendMapper) {
+    public AnimeService(AnimeRepository animeRepository) {
         this.animeRepository = animeRepository;
-        this.frontendMapper = frontendMapper;
+
     }
 
     public List<Anime> findAll() {

@@ -1,329 +1,103 @@
 package org.example.anikudasaikodik.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.example.anikudasaikodik.dto.kodikDTO.KodikAnimeDTO;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
+
+import java.time.LocalDateTime;
+
+import java.util.HashSet;
+
 import java.util.List;
+import java.util.Set;
 
-@Table(name = "anime")
 @Entity
+@Table(name = "anime")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Anime {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String russian;
-    private String url;
-    private String kind;
-    private Double score;
-    private String status;
-    private Integer episodes;
+    @Column(columnDefinition = "text")
+    private String title; //русское название
+    private String type; //фильм или сериал
+    @Column(columnDefinition = "text")
+    private String link; //плеер
+    private Integer year; //год
 
-    @Column(name = "episodes_aired")
-    private Integer episodesAired;
+    //id сторонних сервисов
+    @Column(unique = true)
+    private Long shikimoriId;
+    @Column(unique = true)
+    private Long kinopoiskId;
 
-    @Column(name = "aired_on")
-    private LocalDate airedOn;
+    private String imdbId;
+    @Column(unique = true)
+    private String kodikId;
 
-    @Column(name = "released_on")
-    private LocalDate releasedOn;
 
-    private String rating;
 
-    private String licenseNameRu;
-    private Integer duration;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
 
-    @Column(name = "description_html", columnDefinition = "TEXT")
-    private String descriptionHtml;
+    private LocalDateTime createdAt;
 
-    private String descriptionSource;
-    private String franchise;
+    private LocalDateTime updatedAt;
 
-    private Boolean favoured;
-    private Boolean anons;
-    private Boolean ongoing;
+    private Integer lastEpisode;
 
-    private Long threadId;
-    private Long topicId;
-    private Long myanimelistId;
+    private Integer episodesCount;
 
-    private OffsetDateTime updatedAt;
-    private OffsetDateTime nextEpisodeAt;
+    @ElementCollection
+    @Column(name = "screenshot")
+    private List<String> screenshots;
 
-    // 🔗 связи
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image image;
+    private String animeStatus;
 
-    @OneToMany(mappedBy = "anime", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Screenshots> screenshots = new ArrayList<>();
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+
+    @Column(columnDefinition = "text")
+    private String posterUrl;
+
+    @Column(columnDefinition = "text")
+    private String animeDescription;
+    //рейтинги
+    private String kinopoiskRating;
+    private String imdbRating;
+    private Double shikimoriRating;
+
+    private String ratingMpaa;
+
+
+    private LocalDateTime nextEpisodeAt; //Время выхода следующей серии
+    private Integer episodesTotal; //Количество эпизодов
+    private Integer episodesAired; //Количество уже вышедших эпизодов
+
+    @ManyToMany
     @JoinTable(
-            name = "anime_genre",
+            name = "anime_genres",
             joinColumns = @JoinColumn(name = "anime_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private List<Genre> genres = new ArrayList<>();
+    private Set<Genre> animeGenres = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+    @ManyToMany
     @JoinTable(
-            name = "anime_studios",
+            name = "anime_studio",
             joinColumns = @JoinColumn(name = "anime_id"),
             inverseJoinColumns = @JoinColumn(name = "studio_id")
     )
-    private List<Studios> studios = new ArrayList<>();
-
-
-
-    public Anime() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRussian() {
-        return russian;
-    }
-
-    public void setRussian(String russian) {
-        this.russian = russian;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(Integer episodes) {
-        this.episodes = episodes;
-    }
-
-    public Integer getEpisodesAired() {
-        return episodesAired;
-    }
-
-    public void setEpisodesAired(Integer episodesAired) {
-        this.episodesAired = episodesAired;
-    }
-
-    public LocalDate getAiredOn() {
-        return airedOn;
-    }
-
-    public void setAiredOn(LocalDate airedOn) {
-        this.airedOn = airedOn;
-    }
-
-    public LocalDate getReleasedOn() {
-        return releasedOn;
-    }
-
-    public void setReleasedOn(LocalDate releasedOn) {
-        this.releasedOn = releasedOn;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getLicenseNameRu() {
-        return licenseNameRu;
-    }
-
-    public void setLicenseNameRu(String licenseNameRu) {
-        this.licenseNameRu = licenseNameRu;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescriptionHtml() {
-        return descriptionHtml;
-    }
-
-    public void setDescriptionHtml(String descriptionHtml) {
-        this.descriptionHtml = descriptionHtml;
-    }
-
-    public String getDescriptionSource() {
-        return descriptionSource;
-    }
-
-    public void setDescriptionSource(String descriptionSource) {
-        this.descriptionSource = descriptionSource;
-    }
-
-    public String getFranchise() {
-        return franchise;
-    }
-
-    public void setFranchise(String franchise) {
-        this.franchise = franchise;
-    }
-
-    public Boolean getFavoured() {
-        return favoured;
-    }
-
-    public void setFavoured(Boolean favoured) {
-        this.favoured = favoured;
-    }
-
-    public Boolean getAnons() {
-        return anons;
-    }
-
-    public void setAnons(Boolean anons) {
-        this.anons = anons;
-    }
-
-    public Boolean getOngoing() {
-        return ongoing;
-    }
-
-    public void setOngoing(Boolean ongoing) {
-        this.ongoing = ongoing;
-    }
-
-    public Long getThreadId() {
-        return threadId;
-    }
-
-    public void setThreadId(Long threadId) {
-        this.threadId = threadId;
-    }
-
-    public Long getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
-    }
-
-    public Long getMyanimelistId() {
-        return myanimelistId;
-    }
-
-    public void setMyanimelistId(Long myanimelistId) {
-        this.myanimelistId = myanimelistId;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public OffsetDateTime getNextEpisodeAt() {
-        return nextEpisodeAt;
-    }
-
-    public void setNextEpisodeAt(OffsetDateTime nextEpisodeAt) {
-        this.nextEpisodeAt = nextEpisodeAt;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public List<Screenshots> getScreenshots() {
-        return screenshots;
-    }
-
-    public void setScreenshots(List<Screenshots> screenshots) {
-        this.screenshots = screenshots;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public List<Studios> getStudios() {
-        return studios;
-    }
-
-    public void setStudios(List<Studios> studios) {
-        this.studios = studios;
-    }
-
+    private Set<AnimeStudios> animeStudios = new HashSet<>();
 
 }
+

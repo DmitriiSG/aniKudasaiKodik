@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать аниме</title>
+</head>
+<body>
+<h1>Редактировать аниме</h1>
+
+<form th:action="@{/admin/edit/{id}(id=${anime.id})}" method="post">
+    <label>Название: <input type="text" th:field="*{anime.title}"/></label><br/>
+    <label>Тип: <input type="text" th:field="*{anime.type}"/></label><br/>
+    <label>Ссылка: <input type="text" th:field="*{anime.link}"/></label><br/>
+    <label>Год: <input type="number" th:field="*{anime.year}"/></label><br/>
+    <label>Shikimori ID: <input type="number" th:field="*{anime.shikimoriId}"/></label><br/>
+    <label>KinoPoisk ID: <input type="number" th:field="*{anime.kinopoiskId}"/></label><br/>
+    <label>Kodik ID: <input type="text" th:field="*{anime.kodikId}"/></label><br/>
+    <label>Последняя серия: <input type="number" th:field="*{anime.lastEpisode}"/></label><br/>
+    <label>Количество серий: <input type="number" th:field="*{anime.episodesCount}"/></label><br/>
+    <label>Статус: <input type="text" th:field="*{anime.animeStatus}"/></label><br/>
+    <label>Постер URL: <input type="text" th:field="*{anime.posterUrl}"/></label><br/>
+    <label>Описание: <textarea th:field="*{anime.animeDescription}"></textarea></label><br/>
+    <label>KinoPoisk рейтинг: <input type="text" th:field="*{anime.kinopoiskRating}"/></label><br/>
+    <label>IMDB рейтинг: <input type="text" th:field="*{anime.imdbRating}"/></label><br/>
+    <label>Shikimori рейтинг: <input type="number" step="0.01" th:field="*{anime.shikimoriRating}"/></label><br/>
+    <button type="submit">Сохранить</button>
+</form>
+<a href="/admin">Назад</a>
+</body>
+</html>
